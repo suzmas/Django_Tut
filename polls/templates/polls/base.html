@@ -3,9 +3,19 @@
 <head>
 	{% load staticfiles %}
 	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'polls/style.css' %}" type="text/css" />
 </head>
-	
-<body class="body" style="background-color:#f6f6f6">
+
+
+<!-- top navbar -->
+
+<ul class="navbar">
+	<li>MySite</li>
+	<li><a href="">Home</a></li>
+</ul>
+
+
+<body class="content" style="background-color:#f6f6f6">
 	<div>
 		{% block content %}
 		{% endblock %}
