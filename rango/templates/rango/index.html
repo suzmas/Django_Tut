@@ -5,8 +5,19 @@
 {% block pagename %}Rango{% endblock pagename %}
 
 {% block content %}
-  <h1>This is the index.</h1>
-  So yeah, <strong>{{ boldmessage }}</strong><br />
+<section>
+  <h1>Top Queried Categories</h1>
   <a href="/rango/about/">About</a><br />
+
+  {% if categories %}
+    <ul>
+        {% for category in categories %}
+        <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <strong>There are no categories present.</strong>
+    {% endif %}
+</section>
 
 {% endblock %}
