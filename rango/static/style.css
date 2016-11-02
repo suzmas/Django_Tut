@@ -20,11 +20,14 @@ html, body {
 .navbar li {
 	float: left;
 	display: block;
-	padding: 20px;
+	padding: 15px;
 	color: #666;
 	font-size: 19px;
 }
 
+.navbar li img {
+    height: 40px;
+}
 
 /* mainpage styling */
 

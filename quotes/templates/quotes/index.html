@@ -1,0 +1,22 @@
+
+{% extends "quotes/base.html" %}
+
+
+{% block pagename %}Quotes{% endblock pagename %}
+
+{% block content %}
+<section>
+  <a href="/rango/about/">About</a><br />
+  <h1>Quotes I like</h1>
+  {% if categories %}
+    <ul>
+        {% for quote in quotes %}
+        <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <strong>There are no categories present.</strong>
+    {% endif %}
+</section>
+
+{% endblock %}

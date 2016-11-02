@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.template.defaultfilters import slugify
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -28,3 +29,15 @@ class Page(models.Model):
 
     def __str__(self):
         return self.title
+
+class UserProfile(models.Model):
+    # Link user profile to user model instance
+    user = models.OneToOneField(User)
+
+    # Our addtl user attributes
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+
+    # Override the __str__() method
+    def __str__(self):
+        return self.user.username
