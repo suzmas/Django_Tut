@@ -21,6 +21,9 @@
             <li>{% block pagename %}My Site{% endblock pagename %}</li>
             <li><a href="/rango/">Home</a></li>
             <li><a href="/rango/about">About</a></li>
+            {% if user.is_authenticated %}
+                <li>Hey {{ user.username }}!</li>
+            {% endif %}
         </ul>
         </div>
     </header>

@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
@@ -104,3 +106,40 @@ def register(request):
 
     # render the template depending on the context
     return render(request, 'rango/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+
+def user_login(request):
+    if request.method == "POST":
+        # using request.POST.get(var) instead of request.POST[var] to avoid raising a KeyError
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/rango/')
+            else:
+                # inactive
+                return HttpResponse('Your rango acct is disabled.')
+        else:
+            # bad login
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+
+    else:
+        # req not a POST- likely is a GET- so render login template- have to pass an
+        # dict as the template requires one
+        return render(request, 'rango/login.html', {})
+
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this page.")
+
+def user_logout(request):
+    # We know the User is logged in, as this is a restricted view, so we can just log them out using the added functionality from the Django library
+    logout(request)
+
+    # Take user back to homepage
+    return HttpResponseRedirect('rango/')
